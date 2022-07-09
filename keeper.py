@@ -79,7 +79,7 @@ def retrieve_from_server(date,user):
     
     # Perform SQL query on the Google Sheet.
     # Uses st.cache to only rerun when the query changes or after 10 min.
-    @st.cache(ttl=10)
+    # @st.cache(ttl=10)
     def run_query(query):
         rows = cursor.execute(query)
         # rows = rows.fetchall()
