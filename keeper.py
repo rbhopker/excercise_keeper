@@ -70,7 +70,7 @@ def retrieve_from_server(date,user):
             "https://www.googleapis.com/auth/spreadsheets",
         ],
     )
-    st.write(credentials)
+    st.write(st.secrets["gcp_service_account"])
     conn = connect(":memory:", adapter_kwargs={"gsheetsapi":credentials})
     cursor = conn.cursor()
     
