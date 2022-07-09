@@ -22,6 +22,10 @@ from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from gsheetsdb import connect
 
+from datetime import date
+
+
+
 # streamlit_app.py
 
 def check_password():
@@ -58,7 +62,8 @@ def check_password():
     else:
         # Password correct.
         return True
-
+def initial():
+    date_input = st.date_input("Select the date you want to see activity.", value= date.today())
 if check_password():
     st.write("Here goes your normal Streamlit app...")
     st.button("Click me")
