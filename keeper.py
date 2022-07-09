@@ -20,7 +20,8 @@ import pathlib
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from gsheetsdb import connect
+# from gsheetsdb import connect
+from shillelagh.backends.apsw.db import connect
 
 from datetime import date
 st.session_state["date"] = date.today()
