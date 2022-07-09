@@ -65,6 +65,7 @@ def check_password():
 def initial():
     date_input = st.date_input("Select the date you want to see activity.", value= date.today())
 if check_password():
+    initial()
     st.write("Here goes your normal Streamlit app...")
     st.button("Click me")
 
