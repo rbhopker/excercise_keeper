@@ -70,24 +70,16 @@ def retrieve_from_server(date,user):
         ],
     )
     conn = connect(credentials=credentials)
-    
-    # Perform SQL query on the Google Sheet.
-    # Uses st.cache to only rerun when the query changes or after 10 min.
-    @st.cache(ttl=10)
-    def run_query(query):
-        rows = conn.execute(query, headers=1)
-        rows = rows.fetchall()
-        return rows
-    
-    sheet_url = st.secrets["private_gsheets_url"]
-    query_txt = f'SELECT * FROM "{sheet_url}"'
-    st.write(query_txt)
-    rows = run_query(query_txt)
-    
-    # Print results.
-    for row in rows:
-        st.write(f"{row.user_name} has a :{row.date}:{row.exercise}, {row.comment}, {row.other_comment}")
-    
+
+    service = build('sheets','v4',credentials=credentials)
+    sheet = service.spreadsheets()
+
+    # Sheet0 = 'Sheet1'
+    # result_counter = sheet.values().get(spreadsheetId=Sheet0,range="current_test_number!A1:A3").execute()
+    result_counter = sheet.values().get_all_records()
+    # values_counter = result_counter.get('values',[])
+    df1 = pd.DataFrame(result_counter)
+    st.write(df1)   
 def initial():
     st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
     idx = 0
