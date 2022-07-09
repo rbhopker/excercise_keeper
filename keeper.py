@@ -88,7 +88,7 @@ def retrieve_from_server(date,user):
     
 def initial():
     st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
-    # idx = 0
+    idx = 0
     # if st.session_state["username"] == "isa_ribeiro":
     #     idx=1
     st.session_state["user"] = st.selectbox(
