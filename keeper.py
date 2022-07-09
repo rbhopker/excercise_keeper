@@ -70,8 +70,8 @@ def retrieve_from_server(date,user):
             "https://www.googleapis.com/auth/spreadsheets",
         ],
     )
-    st.write(st.secrets["gcp_service_account"])
-    conn = connect(":memory:", adapter_kwargs={"gsheetsapi":credentials})
+    # st.write(st.secrets["gcp_service_account"])
+    conn = connect(":memory:", adapter_kwargs={"gsheetsapi":st.secrets["gcp_service_account"]})
     cursor = conn.cursor()
     
     # Perform SQL query on the Google Sheet.
