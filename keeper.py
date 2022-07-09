@@ -78,7 +78,7 @@ def retrieve_from_server(date,user):
     # Uses st.cache to only rerun when the query changes or after 10 min.
     @st.cache(ttl=10)
     def run_query(query):
-        rows = cursor.execute(query, headers=1)
+        rows = cursor.execute(query)
         # rows = rows.fetchall()
         return rows
     
