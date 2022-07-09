@@ -84,7 +84,7 @@ def retrieve_from_server(date,user):
     
     # Print results.
     for row in rows:
-        st.write(f"{row.user} has a :{row.date}:{row.exercise}, {row.comment}, row.other_comment}")
+        st.write(f"{row.user} has a :{row.date}:{row.exercise}, {row.comment}, {row.other_comment}")
     
 def initial():
     st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
