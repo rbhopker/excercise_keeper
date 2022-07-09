@@ -23,7 +23,7 @@ from googleapiclient.discovery import build
 from gsheetsdb import connect
 
 from datetime import date
-
+st.session_state["date"] = date.today()
 
 
 # streamlit_app.py
@@ -40,7 +40,7 @@ def check_password():
         ):
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store username + password
-            del st.session_state["username"]
+            # del st.session_state["username"]
         else:
             st.session_state["password_correct"] = False
 
@@ -62,8 +62,41 @@ def check_password():
     else:
         # Password correct.
         return True
+def retrieve_from_server(date,user):
+    credentials = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=[
+            "https://www.googleapis.com/auth/spreadsheets",
+        ],
+    )
+    conn = connect(credentials=credentials)
+    
+    # Perform SQL query on the Google Sheet.
+    # Uses st.cache to only rerun when the query changes or after 10 min.
+    @st.cache(ttl=600)
+    def run_query(query):
+        rows = conn.execute(query, headers=1)
+        rows = rows.fetchall()
+        return rows
+    
+    sheet_url = st.secrets["private_gsheets_url"]
+    rows = run_query(f'SELECT * FROM "{sheet_url}"')
+    
+    # Print results.
+    for row in rows:
+        st.write(f"{row.name} has a :{row.pet}:")
+    
 def initial():
-    date_input = st.date_input("Select the date you want to see activity.", value= date.today())
+    st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
+    idx = 0
+    if st.session_state["username"] == "isa_ribeiro":
+        idx=1
+    st.session_state["user"] = st.selectbox(
+     'De quem voce quer ver a atividade?',
+     ('rbhopker', 'isa_ribeiro'),index=idx)
+    if st.button("Ver"):
+        retrieve_from_server(st.session_state["date"],st.session_state["user"])
+        
 if check_password():
     initial()
     st.write("Here goes your normal Streamlit app...")
