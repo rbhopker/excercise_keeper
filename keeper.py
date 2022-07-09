@@ -7,7 +7,6 @@ Created on Thu Dec 16 10:10:20 2021
 """
 
 import streamlit as st
-from streamlit_plotly_events import plotly_events
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
@@ -386,109 +385,6 @@ fig.update_yaxes(
     scaleanchor = "x",
     scaleratio = 1,
   )
-
-selected_points = plotly_events(fig, click_event=True, hover_event=False)
-st.write("If you have any questions, please contact Ricardo Hopker through rbhopker@mit.edu")
-# st.plotly_chart(fig,use_container_width=True)
-if selected_points ==[]:
-    selected_point = []
-else:
-    selected_point = selected_points[0]
-if st.session_state['last_point'] != [] and selected_point!=[]:
-    selected_point = selected_points[0]
-    # print(st.session_state['last_point']['curveNumber'])
-    curve0 = st.session_state['last_point']['curveNumber']
-    curve1 = selected_point['curveNumber']
-    if curve0 == 0 and curve1 == 0 :
-        st.session_state['path']['x'].append([st.session_state['last_point']['x'],selected_point['x']])
-        st.session_state['path']['y'].append([st.session_state['last_point']['y'],selected_point['y']])
-        # print(st.session_state['path'])
-        # print(valid_path(st.session_state['path']))
-        st.experimental_rerun()
-elif selected_point!=[] and selected_point['curveNumber']!=0:
-    curve1 = selected_point['curveNumber']-1
-    del st.session_state['path']['x'][curve1]
-    del st.session_state['path']['y'][curve1]
-    st.experimental_rerun()
-if st.button(label='Clear all lines'):
-    st.session_state['path'] = {'x':[],'y':[]}
-    st.session_state['last_point'] = selected_point
-    st.experimental_rerun()
-st.session_state['last_point'] = selected_point
-if valid_path(st.session_state['path']):
-    if st.button(label='Next'):
-        
-        st.session_state['finished'] = datetime.now()
-        st.session_state['count'] += 1
-        st.session_state['last_point'] = []
-        selected_points =[]
-        # credentials = service_account.Credentials.from_service_account_info(
-        #     st.secrets["gcp_service_account"],
-        #     scopes=[
-        #         "https://www.googleapis.com/auth/spreadsheets",
-        #     ],
-        # )
-        # # url_results = path / 'results_streamlit.csv'
-        # # streamlit_csv = pd.read_csv(url_results)
-        # conn = connect(credentials=credentials)
-
-        # service = build('sheets','v4',credentials=credentials)
-        # sheet = service.spreadsheets()
-
-        # Sheet0 = st.secrets["Sheet0"]
-        # Sheet1 = st.secrets["Sheet1"]
-        # result_counter = sheet.values().get(spreadsheetId=Sheet1,range="current_test_number!A1:A3").execute()
-        # values_counter = result_counter.get('values',[])
-        # df1 = pd.DataFrame(values_counter)
-        df1 = query_counter()
-        # st.write(df1)
-        last_row = df1.iloc[2][0]
-        
-        # result = sheet.values().get(spreadsheetId=Sheet0,range=f"results_streamlit!A1:E{last_row}").execute()
-        # values = result.get('values',[])
-        # streamlit_csv = pd.DataFrame(values[1:],columns=values[0])
-        streamlit_csv = query_db(last_row)
-        # st.write(streamlit_csv)
-        duration = st.session_state['finished'] - st.session_state['start_time']
-        
-        df_temp = pd.DataFrame([{'test_id': test_id,
-                                 'path':str(path_to_point(st.session_state['path'])),
-                                 'duration':duration.total_seconds(),
-                                 'Session_id': st.session_state['session_id'],
-                                 'Finish_time':st.session_state['finished'].strftime("%Y/%m/%d, %H:%M:%S")}])
-        
-        
-        
-        st.session_state['path'] = {'x':[],'y':[]}
-        # st.write(df_temp)
-        streamlit_csv = pd.concat([streamlit_csv,df_temp])
-        # st.write(streamlit_csv)
-        # streamlit_csv_as_list = streamlit_csv.values.tolist()
-        # streamlit_csv_as_list.insert(0,streamlit_csv.columns.tolist())
-        
-        # dict_write = {'values':streamlit_csv_as_list}
-        # # print(streamlit_csv_as_list)
-        # # st.markdown(streamlit_csv_as_list)
-        # request = sheet.values().update(spreadsheetId=Sheet0,
-        #                                 range="results_streamlit!A1",
-        #                                 valueInputOption='USER_ENTERED', 
-        #                                 body=dict_write).execute()
-        update_db(streamlit_csv)
-        df1.iloc[2][0] = int(df1.iloc[2][0])+1
-        update_counter(df1)
-        # df_as_list = df1.values.tolist()
-        # dictt = {'values':df_as_list}
-        # request = sheet.values().update(spreadsheetId=Sheet1,
-        #                                range="current_test_number!A1",
-        #                                valueInputOption='USER_ENTERED', 
-        #                                body=dictt).execute()
-        
-        
-        # streamlit_csv.to_csv(url_results,index=False)
-        # st.session_state['path'] = {'x':[],'y':[]}
-        st.session_state['start_time'] = datetime.now()
-        del st.session_state['start_time']
-        st.experimental_rerun()
 # if st.button(label='View instructions'):
 with st.expander('View instructions'):
     load_instructions()
