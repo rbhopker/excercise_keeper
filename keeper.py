@@ -79,8 +79,8 @@ def retrieve_from_server(date,user):
         return rows
     
     sheet_url = st.secrets["private_gsheets_url"]
-    st.write(date)
-    query_txt = f'SELECT * FROM "{sheet_url}" WHERE user_name="{user}" AND date = {date};'
+    st.write(str(date))
+    query_txt = f'SELECT * FROM "{sheet_url}" WHERE user_name="{user}" AND date = {str(date)};'
     rows = run_query(query_txt)
     
     # Print results.
