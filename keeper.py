@@ -64,13 +64,6 @@ def check_password():
         # Password correct.
         return True
 def retrieve_from_server(date,user):
-    credentials = service_account.Credentials.from_service_account_info(
-        st.secrets["gcp_service_account"],
-        scopes=[
-            "https://www.googleapis.com/auth/spreadsheets",
-        ],
-    )
-    # st.write(st.secrets["gcp_service_account"])
     conn = connect(":memory:", adapter_kwargs={"gsheetsapi":
                                                {"service_account_info":
                                                    st.secrets["gcp_service_account"]},
@@ -86,7 +79,8 @@ def retrieve_from_server(date,user):
         return rows
     
     sheet_url = st.secrets["private_gsheets_url"]
-    query_txt = f'SELECT * FROM "{sheet_url}" WHERE user_name="{user}" AND date ="{date}";'
+    st.write(date)
+    query_txt = f'SELECT * FROM "{sheet_url}" WHERE user_name="{user}";'
     rows = run_query(query_txt)
     
     # Print results.
