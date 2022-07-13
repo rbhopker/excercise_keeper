@@ -96,7 +96,9 @@ def retrieve_from_server(date,user):
     rows = run_query(query_txt)
     
     # Print results.
-    for txt in query_to_text(user,rows):
+    txts = query_to_text(user,rows)
+    st.write(txt)
+    for txt in txts:
         st.write(txt)
 def initial():
     st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
