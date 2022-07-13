@@ -24,9 +24,9 @@ from googleapiclient.discovery import build
 from shillelagh.backends.apsw.db import connect
 
 from datetime import date
-import time
-import pyautogui
-from threading import Thread
+# import time
+# import pyautogui
+# from threading import Thread
 
 st.session_state["date"] = date.today()
 
