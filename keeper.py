@@ -70,8 +70,8 @@ def query_to_text(user,rows):
     else:
         txt = []
         for row in rows:
-            st.write(row)
             txt.append(f"{row[1]}, {row[0]}, Exercicio: {row[2]}, Detalhes: {row[3]}, Comentarios: {row[4]}")
+            st.write(txt[-1])
     return txt
     
 def retrieve_from_server(date,user):
