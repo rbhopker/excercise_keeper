@@ -63,6 +63,15 @@ def check_password():
     else:
         # Password correct.
         return True
+
+def query_to_text(user,rows):
+    if list(rows)==[]:
+        txt = [f"{user} nao anotou nenhum exercicio nesta data"]
+    else:
+        txt = []
+        for row in rows:
+            txt.append(f"{row[0]} Exercicio: {row[1]}")
+    
 def retrieve_from_server(date,user):
     conn = connect(":memory:", adapter_kwargs={"gsheetsapi":
                                                {"service_account_info":
@@ -86,10 +95,8 @@ def retrieve_from_server(date,user):
     rows = run_query(query_txt)
     
     # Print results.
-    st.write(list(rows))
-    
     for row in rows:
-        st.write(f"{row}")
+        st.write(f"{row[0]} Exercicio: {row[1]}")
 def initial():
     st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
     idx = 0
