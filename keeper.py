@@ -97,7 +97,7 @@ def retrieve_from_server(date,user):
     
     # Print results.
     txts = query_to_text(user,rows)
-    st.write(txt)
+    st.write(txts)
     for txt in txts:
         st.write(txt)
 def initial():
