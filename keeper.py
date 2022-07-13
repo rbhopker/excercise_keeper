@@ -24,10 +24,24 @@ from googleapiclient.discovery import build
 from shillelagh.backends.apsw.db import connect
 
 from datetime import date
+import time
+import pyautogui
+from threading import Thread
+
 st.session_state["date"] = date.today()
 
 
 # streamlit_app.py
+
+def session_timeout(seconds):
+    def sub(s):
+        t_end = time.time() + s
+        while time.time()<t_end:
+            pass
+        pyautogui.hotkey("ctrl","w")   # windows shortcut to close current tab
+    t = Thread(target = sub, args=[seconds])
+    st._add_report_ctx(thread=t)
+    t.start()
 
 def check_password():
     """Returns `True` if the user had a correct password."""
@@ -71,9 +85,7 @@ def query_to_text(user,rows):
     txt = []
     for row in rows:
         r =list(row)
-        st.write('im here')
         txt.append(f"{r[1]}, {r[0]}, Exercicio: {r[2]}, Detalhes: {r[3]}, Comentarios: {r[4]}")
-        st.write(txt[-1])
     if txt ==[]:
         txt = [f"{user} nao anotou nenhum exercicio nesta data"]
     return txt
@@ -122,7 +134,7 @@ if check_password():
     initial()
     st.write("Here goes your normal Streamlit app...")
     st.button("Click me")
-
+session_timeout(600)
 # def load_instructions():
 #     txt2 = """Travel Salesperson (TSP) Problem Instructions: \n\n
 # The TSP problem is composed of several points, your task is to try to find the shortest path that links all points, with straight lines, while going to each point once and only once and returning to the starting position.\n 
