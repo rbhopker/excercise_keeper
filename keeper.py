@@ -98,8 +98,9 @@ def retrieve_from_server(date,user):
     for row in rows:
         st.write(row)
     # Print results.
+    st.write(rows)
+    st.write(list(rows))
     txts = query_to_text(user,list(rows))
-    st.write(txts)
     for txt in txts:
         st.write(txt)
 def initial():
