@@ -94,7 +94,7 @@ def retrieve_from_server(date,user):
     query_txt = f'SELECT * FROM "{sheet_url}" WHERE user_name="{user}" AND date = "{str_date}";'
     # st.write(query_txt)
     rows = run_query(query_txt)
-    
+    st.write(rows)
     # Print results.
     txts = query_to_text(user,rows)
     st.write(txts)
