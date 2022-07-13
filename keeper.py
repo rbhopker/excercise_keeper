@@ -70,7 +70,8 @@ def query_to_text(user,rows):
     else:
         txt = []
         for row in rows:
-            txt.append(f"{row[0]} Exercicio: {row[1]}")
+            txt.append(f"{row[1]}, {row[0]}, Exercicio: {row[2]}, Detalhes: {row[3]}, Comentarios: row[4]")
+    return txt
     
 def retrieve_from_server(date,user):
     conn = connect(":memory:", adapter_kwargs={"gsheetsapi":
@@ -95,8 +96,8 @@ def retrieve_from_server(date,user):
     rows = run_query(query_txt)
     
     # Print results.
-    for row in rows:
-        st.write(f"{row[0]} Exercicio: {row[1]}")
+    for txt in query_to_text(user,rows):
+        st.write(txt)
 def initial():
     st.session_state["date"] = st.date_input("Selecione a data que voce quer ver atividade.", value=st.session_state["date"])
     idx = 0
