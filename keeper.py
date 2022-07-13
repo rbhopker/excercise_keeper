@@ -67,7 +67,7 @@ def check_password():
 def query_to_text(user,rows):
     if list(rows)==[]:
         txt = [f"{user} nao anotou nenhum exercicio nesta data"]
-    else:
+    else:txt
         txt = []
         for row in rows:
             txt.append(f"{row[1]}, {row[0]}, Exercicio: {row[2]}, Detalhes: {row[3]}, Comentarios: {row[4]}")
@@ -98,7 +98,7 @@ def retrieve_from_server(date,user):
     for row in rows:
         st.write(row)
     # Print results.
-    txts = query_to_text(user,rows)
+    txts = query_to_text(user,list(rows))
     st.write(txts)
     for txt in txts:
         st.write(txt)
