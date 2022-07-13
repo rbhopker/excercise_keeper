@@ -5,6 +5,3 @@ pandas
 shillelagh
 google-api-python-client
 datetime
-time
-pyautogui
-threading

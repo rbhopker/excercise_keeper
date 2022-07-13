@@ -33,15 +33,15 @@ st.session_state["date"] = date.today()
 
 # streamlit_app.py
 
-def session_timeout(seconds):
-    def sub(s):
-        t_end = time.time() + s
-        while time.time()<t_end:
-            pass
-        pyautogui.hotkey("ctrl","w")   # windows shortcut to close current tab
-    t = Thread(target = sub, args=[seconds])
-    st._add_report_ctx(thread=t)
-    t.start()
+# def session_timeout(seconds):
+#     def sub(s):
+#         t_end = time.time() + s
+#         while time.time()<t_end:
+#             pass
+#         pyautogui.hotkey("ctrl","w")   # windows shortcut to close current tab
+#     t = Thread(target = sub, args=[seconds])
+#     st._add_report_ctx(thread=t)
+#     t.start()
 
 def check_password():
     """Returns `True` if the user had a correct password."""
@@ -134,7 +134,7 @@ if check_password():
     initial()
     st.write("Here goes your normal Streamlit app...")
     st.button("Click me")
-session_timeout(600)
+# session_timeout(600)
 # def load_instructions():
 #     txt2 = """Travel Salesperson (TSP) Problem Instructions: \n\n
 # The TSP problem is composed of several points, your task is to try to find the shortest path that links all points, with straight lines, while going to each point once and only once and returning to the starting position.\n 
