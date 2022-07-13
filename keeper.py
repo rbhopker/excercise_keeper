@@ -86,7 +86,7 @@ def retrieve_from_server(date,user):
     rows = run_query(query_txt)
     
     # Print results.
-    st.write(len(rows))
+    st.write(list(rows))
     
     for row in rows:
         st.write(f"{row}")
