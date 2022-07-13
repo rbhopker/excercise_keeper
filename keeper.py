@@ -85,7 +85,7 @@ def query_to_text(user,rows):
     txt = []
     for row in rows:
         r =list(row)
-        txt.append(f"{r[1]}\n {r[0]}, Exercicio: {r[2]}, Detalhes: {r[3]}, Comentarios: {r[4]}")
+        txt.append(f"{r[1]} \n   {r[0]}, Exercicio: {r[2]}, Detalhes: {r[3]}, Comentarios: {r[4]}")
     if txt ==[]:
         txt = [f"{user} nao anotou nenhum exercicio nesta data"]
     return txt
