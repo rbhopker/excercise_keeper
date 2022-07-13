@@ -70,7 +70,9 @@ def query_to_text(user,rows):
     # else:
     txt = []
     for row in rows:
-        txt.append(f"{row[1]}, {row[0]}, Exercicio: {row[2]}, Detalhes: {row[3]}, Comentarios: {row[4]}")
+        r =list(row)
+        st.write('im here')
+        txt.append(f"{r[1]}, {r[0]}, Exercicio: {r[2]}, Detalhes: {r[3]}, Comentarios: {r[4]}")
         st.write(txt[-1])
     if txt ==[]:
         txt = [f"{user} nao anotou nenhum exercicio nesta data"]
@@ -101,7 +103,6 @@ def retrieve_from_server(date,user):
         st.write(row)
         st.write(list(row))
     # Print results.
-    st.write(rows)
     st.write(list(rows))
     txts = query_to_text(user,rows)
     for txt in txts:
