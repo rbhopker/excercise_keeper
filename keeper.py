@@ -67,7 +67,7 @@ def check_password():
 def query_to_text(user,rows):
     if list(rows)==[]:
         txt = [f"{user} nao anotou nenhum exercicio nesta data"]
-    else:txt
+    else:
         txt = []
         for row in rows:
             txt.append(f"{row[1]}, {row[0]}, Exercicio: {row[2]}, Detalhes: {row[3]}, Comentarios: {row[4]}")
